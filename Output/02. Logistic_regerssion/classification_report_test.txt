@@ -1,0 +1,20 @@
+=== Test set | threshold = 0.5000 (default 0.50) ===
+              precision    recall  f1-score   support
+
+    Retained     0.9947    0.9228    0.9574      9225
+     Churned     0.3825    0.9074    0.5381       486
+
+    accuracy                         0.9220      9711
+   macro avg     0.6886    0.9151    0.7478      9711
+weighted avg     0.9641    0.9220    0.9364      9711
+
+=== Test set | threshold = 0.9151 (tuned on validation) ===
+              precision    recall  f1-score   support
+
+    Retained     0.9847    0.9874    0.9860      9225
+     Churned     0.7478    0.7078    0.7273       486
+
+    accuracy                         0.9734      9711
+   macro avg     0.8662    0.8476    0.8567      9711
+weighted avg     0.9728    0.9734    0.9731      9711
+

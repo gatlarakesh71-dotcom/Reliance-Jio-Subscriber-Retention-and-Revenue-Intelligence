@@ -1,0 +1,4 @@
+Shuffled-label test ROC-AUC: 0.6063 (expected ~0.50)
+Max single-feature AUC: 0.8133 (days_since_last_recharge)
+Leaky columns excluded: ['churn_reason', 'churn_date', 'churn_flag_30d']
+Train-Test ROC-AUC gap: 0.0007

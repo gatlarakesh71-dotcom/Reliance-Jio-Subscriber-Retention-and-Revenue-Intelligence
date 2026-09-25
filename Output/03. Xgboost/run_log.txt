@@ -1,0 +1,180 @@
+
+==============================================================================
+ 1. LOAD DATA
+==============================================================================
+File            : E:\B. Data Analyst\2. Bootcamp\Project-5 ( Jio_Subscriber_Retention_Churn)\2. Clean Data\Project_5\Cleaned_File\subscribers.csv
+Shape           : 64,738 rows x 43 columns
+Churn (90d)     : 3,241 churned / 61,497 retained -> 5.01 % positive  (1 : 19.0)
+
+==============================================================================
+ 2. FEATURES - LEAKAGE CONTROL
+==============================================================================
+Removed (outcome-linked) : ['churn_reason', 'churn_date', 'churn_flag_30d']
+Removed (identifier)     : ['subscriber_id']
+Removed (redundant)      : ['circle_code', 'join_date']
+Raw features kept        : 36
+Single-feature AUC scan  : max = 0.813 (days_since_last_recharge) -> no feature is a near-perfect predictor (OK)
+
+==============================================================================
+ 3. STRATIFIED 70 / 15 / 15 SPLIT
+==============================================================================
+  Train     : 45,316 rows (70.0 %) | churned 2,269 | churn rate 5.01 %
+  Validation:  9,711 rows (15.0 %) | churned   486 | churn rate 5.00 %
+  Test      :  9,711 rows (15.0 %) | churned   486 | churn rate 5.00 %
+Model input features (after one-hot encoding): 73
+Imbalance ratio in TRAIN (retained : churned) = 18.97 : 1
+
+==============================================================================
+ 4. BASELINES (to prove the model adds real value)
+==============================================================================
+  Majority-class (predict nobody churns)     acc=0.9500 prec=0.0000 rec=0.0000 f1=0.0000 roc_auc=0.5000
+  Logistic regression (balanced)             acc=0.9731 prec=0.7473 rec=0.6996 f1=0.7226 roc_auc=0.9768
+  -> Note how the do-nothing baseline scores ~95 % ACCURACY yet catches 0 churners.
+
+==============================================================================
+ 5. XGBOOST - HYPER-PARAMETER SEARCH (30 trials, early stopping on validation PR-AUC)
+==============================================================================
+  trial  1/30 | depth=5 lr=0.05  spw=4.36   | trees= 226 | val PR-AUC=0.8071 ROC-AUC=0.9720 |  3.1s  <-- best so far
+  trial  2/30 | depth=6 lr=0.03  spw=4.36   | trees= 256 | val PR-AUC=0.8057 ROC-AUC=0.9713 |  3.2s
+  trial  3/30 | depth=6 lr=0.1   spw=4.36   | trees= 104 | val PR-AUC=0.8002 ROC-AUC=0.9707 |  1.7s
+  trial  4/30 | depth=7 lr=0.03  spw=1.00   | trees= 346 | val PR-AUC=0.8071 ROC-AUC=0.9707 |  3.9s
+  trial  5/30 | depth=7 lr=0.08  spw=4.36   | trees=  92 | val PR-AUC=0.7990 ROC-AUC=0.9688 |  1.7s
+  trial  6/30 | depth=7 lr=0.03  spw=4.36   | trees= 213 | val PR-AUC=0.8009 ROC-AUC=0.9695 |  3.3s
+  trial  7/30 | depth=5 lr=0.03  spw=1.00   | trees= 436 | val PR-AUC=0.8044 ROC-AUC=0.9705 |  5.2s
+  trial  8/30 | depth=4 lr=0.1   spw=1.00   | trees=  98 | val PR-AUC=0.8063 ROC-AUC=0.9711 |  1.7s
+  trial  9/30 | depth=5 lr=0.03  spw=1.00   | trees= 352 | val PR-AUC=0.8034 ROC-AUC=0.9704 |  4.5s
+  trial 10/30 | depth=7 lr=0.1   spw=4.36   | trees=  83 | val PR-AUC=0.8013 ROC-AUC=0.9699 |  1.8s
+  trial 11/30 | depth=7 lr=0.03  spw=18.97  | trees= 240 | val PR-AUC=0.7954 ROC-AUC=0.9687 |  4.5s
+  trial 12/30 | depth=6 lr=0.05  spw=4.36   | trees= 173 | val PR-AUC=0.8020 ROC-AUC=0.9712 |  2.7s
+  trial 13/30 | depth=6 lr=0.08  spw=4.36   | trees= 127 | val PR-AUC=0.8016 ROC-AUC=0.9696 |  2.1s
+  trial 14/30 | depth=5 lr=0.03  spw=1.00   | trees= 390 | val PR-AUC=0.8036 ROC-AUC=0.9703 |  5.0s
+  trial 15/30 | depth=7 lr=0.05  spw=1.00   | trees= 300 | val PR-AUC=0.8056 ROC-AUC=0.9699 |  4.2s
+  trial 16/30 | depth=6 lr=0.05  spw=4.36   | trees= 137 | val PR-AUC=0.8026 ROC-AUC=0.9706 |  2.6s
+  trial 17/30 | depth=4 lr=0.1   spw=4.36   | trees=  91 | val PR-AUC=0.8037 ROC-AUC=0.9701 |  1.7s
+  trial 18/30 | depth=3 lr=0.08  spw=1.00   | trees= 211 | val PR-AUC=0.8081 ROC-AUC=0.9711 |  2.6s  <-- best so far
+  trial 19/30 | depth=4 lr=0.05  spw=1.00   | trees= 322 | val PR-AUC=0.8069 ROC-AUC=0.9717 |  3.8s
+  trial 20/30 | depth=7 lr=0.05  spw=1.00   | trees= 529 | val PR-AUC=0.8049 ROC-AUC=0.9705 |  6.0s
+  trial 21/30 | depth=4 lr=0.1   spw=18.97  | trees=  91 | val PR-AUC=0.8043 ROC-AUC=0.9702 |  2.0s
+  trial 22/30 | depth=5 lr=0.03  spw=4.36   | trees= 276 | val PR-AUC=0.8042 ROC-AUC=0.9707 |  3.7s
+  trial 23/30 | depth=3 lr=0.1   spw=4.36   | trees= 238 | val PR-AUC=0.8070 ROC-AUC=0.9716 |  3.0s
+  trial 24/30 | depth=6 lr=0.03  spw=1.00   | trees= 324 | val PR-AUC=0.8067 ROC-AUC=0.9713 |  4.2s
+  trial 25/30 | depth=6 lr=0.05  spw=18.97  | trees= 103 | val PR-AUC=0.7958 ROC-AUC=0.9680 |  2.0s
+  trial 26/30 | depth=5 lr=0.1   spw=4.36   | trees=  73 | val PR-AUC=0.8004 ROC-AUC=0.9704 |  1.5s
+  trial 27/30 | depth=5 lr=0.05  spw=18.97  | trees= 150 | val PR-AUC=0.7997 ROC-AUC=0.9702 |  2.4s
+  trial 28/30 | depth=5 lr=0.03  spw=18.97  | trees= 313 | val PR-AUC=0.7997 ROC-AUC=0.9698 |  4.3s
+  trial 29/30 | depth=4 lr=0.05  spw=4.36   | trees= 241 | val PR-AUC=0.8046 ROC-AUC=0.9709 |  3.2s
+  trial 30/30 | depth=3 lr=0.05  spw=18.97  | trees= 236 | val PR-AUC=0.8049 ROC-AUC=0.9711 |  3.1s
+
+Best parameters: {"learning_rate": 0.08, "max_depth": 3, "min_child_weight": 20.0, "subsample": 0.6609248410852674, "colsample_bytree": 0.848160187538868, "gamma": 1.0, "reg_lambda": 5.0, "reg_alpha": 0.5, "scale_pos_weight": 1.0, "n_trees_after_early_stopping": 211}
+
+==============================================================================
+ 6. DECISION THRESHOLD (chosen on VALIDATION only)
+==============================================================================
+F1-optimal threshold on validation = 0.4210 (validation F1 = 0.7481)
+Default 0.50 threshold is also reported for transparency.
+
+==============================================================================
+ 7. FINAL EVALUATION - TEST SET (touched once, never used for tuning)
+==============================================================================
+  Train      @ tuned (t=0.421) | Accuracy 0.9788 | Precision 0.8498 | Recall 0.7007 | F1 0.7681 | ROC-AUC 0.9775 | PR-AUC 0.8492
+  Validation @ tuned (t=0.421) | Accuracy 0.9766 | Precision 0.8120 | Recall 0.6934 | F1 0.7481 | ROC-AUC 0.9711 | PR-AUC 0.8081
+  Test       @ tuned (t=0.421) | Accuracy 0.9750 | Precision 0.7956 | Recall 0.6728 | F1 0.7291 | ROC-AUC 0.9768 | PR-AUC 0.8113
+
+  Validation @ 0.50  (t=0.500) | Accuracy 0.9764 | Precision 0.8391 | Recall 0.6543 | F1 0.7353 | ROC-AUC 0.9711 | PR-AUC 0.8081
+  Test       @ 0.50  (t=0.500) | Accuracy 0.9754 | Precision 0.8259 | Recall 0.6440 | F1 0.7237 | ROC-AUC 0.9768 | PR-AUC 0.8113
+
+  TEST confusion matrix @ tuned threshold: TN=9,141  FP=84  FN=159  TP=327
+  TEST balanced accuracy = 0.8319 | MCC = 0.7188 | specificity = 0.9909
+  Train-Test ROC-AUC gap = 0.0007  (healthy)
+
+              precision    recall  f1-score   support
+
+    Retained     0.9829    0.9909    0.9869      9225
+     Churned     0.7956    0.6728    0.7291       486
+
+    accuracy                         0.9750      9711
+   macro avg     0.8893    0.8319    0.8580      9711
+weighted avg     0.9735    0.9750    0.9740      9711
+
+95 % bootstrap confidence intervals on TEST (1000 resamples):
+  accuracy   0.9750   [0.9719, 0.9780]
+  precision  0.7952   [0.7545, 0.8329]
+  recall     0.6730   [0.6295, 0.7137]
+  f1_score   0.7288   [0.6939, 0.7598]
+  roc_auc    0.9769   [0.9718, 0.9819]
+  pr_auc     0.8120   [0.7825, 0.8403]
+
+Risk-decile table (test):
+ decile  customers  churners  churn_rate  lift  cum_churners_captured_pct
+      1        972       427       0.439 8.778                     87.860
+      2        971        43       0.044 0.885                     96.708
+      3        971        10       0.010 0.206                     98.765
+      4        971         4       0.004 0.082                     99.588
+      5        971         1       0.001 0.021                     99.794
+      6        971         1       0.001 0.021                    100.000
+      7        971         0       0.000 0.000                    100.000
+      8        971         0       0.000 0.000                    100.000
+      9        971         0       0.000 0.000                    100.000
+     10        971         0       0.000 0.000                    100.000
+
+  -> Contacting only the riskiest 10 % captures 87.9 % of all churners (8.8x lift).
+
+==============================================================================
+ 8. FEATURE IMPORTANCE
+==============================================================================
+                   feature  gain_importance  permutation_importance_pr_auc
+          mnp_enquiry_flag           0.5408                         0.4184
+  days_since_last_recharge           0.1312                         0.1259
+     avg_recharge_gap_days           0.0473                         0.0267
+     unresolved_complaints           0.0352                         0.0245
+outgoing_to_competitor_pct           0.0313                         0.0295
+       arpu_last_month_inr           0.0303                         0.0143
+             tenure_months           0.0259                         0.0288
+     site_congestion_score           0.0241                         0.0132
+            app_logins_30d           0.0207                         0.0057
+        drop_call_rate_pct           0.0156                         0.0072
+               avg_sinr_db           0.0116                         0.0052
+             complaints_6m           0.0112                         0.0024
+
+==============================================================================
+ 9. SANITY CHECKS (proof the result is not artificial)
+==============================================================================
+  (a) Shuffled-label test ROC-AUC = 0.6063  (CHECK: should be ~0.50)
+  (b) Without mnp_enquiry_flag  -> ROC-AUC 0.9502 | PR-AUC 0.5923 | Precision 0.6031 | Recall 0.5535 | F1 0.5773
+
+==============================================================================
+ 10. SAVING PLOTS & MODEL
+==============================================================================
+Saved to: E:\B. Data Analyst\2. Bootcamp\Project-5 ( Jio_Subscriber_Retention_Churn)\2. Clean Data\Project_5\output
+   - 01. EDA figures
+   - 01. Jio_Retention_Brief.pdf
+   - 02. Jio_Subscriber_Retention_Business_Report(Summary).pdf
+   - 02. Logistic_regerssion
+   - 03. subscriber_EDA_report.pdf
+   - 04. Logistic_Regression_Report.pdf
+   - ablation_test.csv
+   - best_params.json
+   - calibration_test.png
+   - classification_report_test.txt
+   - confusion_matrices_test.png
+   - decile_lift_table_test.csv
+   - feature_importance.csv
+   - feature_importance.png
+   - hyperparameter_search.csv
+   - leakage_scan_univariate_auc.csv
+   - learning_curve.png
+   - lift_and_gains_test.png
+   - metrics_summary.csv
+   - model_config.json
+   - model_vs_baselines_test.csv
+   - RESULTS_SUMMARY.txt
+   - roc_pr_curves.png
+   - run_log.txt
+   - sanity_checks.txt
+   - split_summary.csv
+   - test_metrics_bootstrap_ci.csv
+   - test_predictions.csv
+   - threshold_selection_validation.png
+   - xgboost_churn_model.json
+
+Done in 123 s.

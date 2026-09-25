@@ -1,0 +1,9 @@
+SUBSCRIBER CHURN - SHAP EXPLAINABILITY
+================================================
+Rows explained: 5,000 of 9,711 test rows
+Model: E:\B. Data Analyst\2. Bootcamp\Project-5 ( Jio_Subscriber_Retention_Churn)\2. Clean Data\Project_5\Output\03. Xgboost\xgboost_churn_model.json
+Leakage columns excluded: churn_reason, churn_date, churn_flag_30d
+Top global feature: mnp_enquiry_flag
+Top feature mean absolute SHAP: 1.039124
+Highest-risk subscriber: JIO10017064
+Highest-risk predicted probability: 0.996531

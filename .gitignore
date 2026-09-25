@@ -1,0 +1,26 @@
+# Virtual environment
+JIo_venv/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Secrets / local config
+chatbot/API_Key.txt
+chatbot/.env
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Logs
+*.log

@@ -1,0 +1,10 @@
+Test set - threshold = 0.4210
+
+              precision    recall  f1-score   support
+
+    Retained     0.9829    0.9909    0.9869      9225
+     Churned     0.7956    0.6728    0.7291       486
+
+    accuracy                         0.9750      9711
+   macro avg     0.8893    0.8319    0.8580      9711
+weighted avg     0.9735    0.9750    0.9740      9711

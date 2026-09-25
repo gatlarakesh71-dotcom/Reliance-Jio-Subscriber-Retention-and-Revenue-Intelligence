@@ -1,0 +1,52 @@
+======================================================================
+SUBSCRIBER CHURN - LOGISTIC REGRESSION BASELINE
+======================================================================
+Loaded E:\B. Data Analyst\2. Bootcamp\Project-5 ( Jio_Subscriber_Retention_Churn)\2. Clean Data\Project_5\Cleaned_File\subscribers.csv  ->  64,738 rows x 43 columns
+Target            : churn_flag_90d  (positive rate = 5.01%, 3,241 churners)
+Excluded (leakage): ['churn_reason', 'churn_date', 'churn_flag_30d']
+Excluded (non-feature): ['subscriber_id', 'join_date', 'circle_code']
+Features used     : 36  (31 numeric/binary, 5 categorical)
+Categorical cols  : ['circle', 'zone', 'plan_type', 'device_brand', 'home_product']
+
+Data split (stratified on the target):
+     split  rows  share_of_data  churners  churn_rate
+     train 45316         0.7000      2269      0.0501
+validation  9711         0.1500       486      0.0500
+      test  9711         0.1500       486      0.0500
+
+Tuning regularisation strength C on the validation set (metric: ROC-AUC)
+  C = 0.01    validation ROC-AUC = 0.9710
+  C = 0.1     validation ROC-AUC = 0.9711
+  C = 1.0     validation ROC-AUC = 0.9710
+  C = 10.0    validation ROC-AUC = 0.9710
+Selected C = 0.1
+Decision threshold maximising F1 on validation = 0.9151
+
+======================================================================
+METRICS  (Accuracy, Precision, Recall, F1-score, ROC-AUC)
+======================================================================
+     split      threshold_type  threshold  accuracy  precision  recall  f1_score  roc_auc  pr_auc
+     Train        default_0.50     0.5000    0.9251     0.3927  0.9066    0.5480   0.9725  0.8196
+     Train tuned_on_validation     0.9151    0.9758     0.7884  0.7060    0.7449   0.9725  0.8196
+Validation        default_0.50     0.5000    0.9193     0.3726  0.8971    0.5266   0.9711  0.8111
+Validation tuned_on_validation     0.9151    0.9750     0.7624  0.7263    0.7439   0.9711  0.8111
+      Test        default_0.50     0.5000    0.9220     0.3825  0.9074    0.5381   0.9769  0.8090
+      Test tuned_on_validation     0.9151    0.9734     0.7478  0.7078    0.7273   0.9769  0.8090
+
+Top 5 features raising churn risk:
+                   feature  coefficient  odds_ratio
+          mnp_enquiry_flag        0.983       2.674
+  days_since_last_recharge        0.854       2.349
+outgoing_to_competitor_pct        0.624       1.867
+     unresolved_complaints        0.505       1.657
+   circle_Himachal Pradesh        0.493       1.638
+
+Top 5 features lowering churn risk:
+            feature  coefficient  odds_ratio
+    autopay_enabled       -0.407       0.665
+      circle_Kerala       -0.448       0.639
+      tenure_months       -0.568       0.567
+  circle_North East       -0.609       0.544
+arpu_last_month_inr       -1.074       0.342
+
+All results saved to: E:\B. Data Analyst\2. Bootcamp\Project-5 ( Jio_Subscriber_Retention_Churn)\2. Clean Data\Project_5\Output

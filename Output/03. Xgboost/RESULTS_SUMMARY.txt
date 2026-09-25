@@ -1,0 +1,16 @@
+SUBSCRIBER CHURN - XGBoost 90-day model - TEST SET RESULTS
+============================================================
+Rows: 64,738 | churn rate 5.01 % | split 70/15/15 (stratified)
+Excluded leakage columns: churn_reason, churn_date, churn_flag_30d
+Decision threshold (validation-tuned, F1-optimal): 0.4210
+
+accuracy  : 0.9750   (95 % CI 0.9719 - 0.9780)
+precision : 0.7956   (95 % CI 0.7545 - 0.8329)
+recall    : 0.6728   (95 % CI 0.6295 - 0.7137)
+f1_score  : 0.7291   (95 % CI 0.6939 - 0.7598)
+roc_auc   : 0.9768   (95 % CI 0.9718 - 0.9819)
+pr_auc    : 0.8113   (95 % CI 0.7825 - 0.8403)
+
+Confusion matrix: TN=9,141 FP=84 FN=159 TP=327
+Top-10 % risk decile captures 87.9 % of churners (8.8x lift)
+Shuffled-label sanity ROC-AUC: 0.6063 (expected ~0.50)

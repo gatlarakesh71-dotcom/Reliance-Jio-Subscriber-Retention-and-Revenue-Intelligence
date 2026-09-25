@@ -1,0 +1,52 @@
+{
+  "target": "churn_flag_90d",
+  "excluded_leakage_columns": [
+    "churn_reason",
+    "churn_date",
+    "churn_flag_30d"
+  ],
+  "excluded_non_feature_columns": [
+    "subscriber_id",
+    "join_date",
+    "circle_code"
+  ],
+  "n_features_used": 36,
+  "split": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15,
+    "seed": 42
+  },
+  "model": {
+    "type": "LogisticRegression (L2)",
+    "C": 0.1,
+    "class_weight": "balanced"
+  },
+  "tuned_threshold": 0.915102147525302,
+  "test_metrics_default_0.50": {
+    "threshold": 0.5,
+    "accuracy": 0.9220471630110184,
+    "precision": 0.38248048568950566,
+    "recall": 0.9074074074074074,
+    "f1_score": 0.5381330079316656,
+    "roc_auc": 0.9768619447511347,
+    "pr_auc": 0.8089976225817535,
+    "tn": 8513,
+    "fp": 712,
+    "fn": 45,
+    "tp": 441
+  },
+  "test_metrics_tuned_threshold": {
+    "threshold": 0.9151,
+    "accuracy": 0.9734321902996602,
+    "precision": 0.7478260869565218,
+    "recall": 0.7078189300411523,
+    "f1_score": 0.7272727272727273,
+    "roc_auc": 0.9768619447511347,
+    "pr_auc": 0.8089976225817535,
+    "tn": 9109,
+    "fp": 116,
+    "fn": 142,
+    "tp": 344
+  }
+}

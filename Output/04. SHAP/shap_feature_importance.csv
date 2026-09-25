@@ -1,0 +1,74 @@
+feature,mean_abs_shap,mean_shap
+mnp_enquiry_flag,1.0391241,-0.6302159
+days_since_last_recharge,0.7295411,-0.43049076
+outgoing_to_competitor_pct,0.4384292,-0.11073259
+unresolved_complaints,0.37999305,-0.115555905
+tenure_months,0.35979342,-0.08161613
+avg_recharge_gap_days,0.3541071,-0.21366034
+arpu_last_month_inr,0.3040754,-0.109165676
+site_congestion_score,0.29422212,-0.07741147
+app_logins_30d,0.23673218,-0.070999786
+drop_call_rate_pct,0.21266367,-0.038216904
+avg_sinr_db,0.21161924,-0.024391564
+payment_failures_6m,0.19734004,-0.06377143
+complaints_6m,0.17691007,-0.049368404
+autopay_enabled,0.16823393,-0.03919062
+avg_resolution_days,0.13994847,-0.033445816
+arpu_3m_avg_inr,0.11797765,-0.04808479
+num_services,0.07079897,-0.00568735
+arpu_6m_avg_inr,0.068659164,-0.023214323
+recharge_count_6m,0.056561884,-0.0370917
+family_plan_flag,0.05643299,-0.0014861289
+data_gb_3m_avg,0.05558139,-0.0029599257
+data_gb_last_month,0.05372913,0.0044197817
+is_5g_active,0.052472234,-0.007715554
+is_5g_device,0.03676665,-0.006039682
+voice_minutes_last_month,0.033832602,-0.0017974316
+zone_North,0.032687366,-0.0034554633
+home_product_None,0.032662224,-0.011618764
+plan_price_inr,0.030973865,-0.0038600755
+sms_count_last_month,0.026859896,-0.0010962322
+plan_validity_days,0.01854696,-0.012976825
+zone_South,0.014624569,-0.001558826
+device_brand_POCO,0.0053601614,-0.000110654226
+circle_Tamil Nadu,0.0046061072,0.0006523657
+zone_West,0.0043128887,-0.0003528999
+circle_Karnataka,0.0040842765,-0.00036524146
+offer_exposed_90d,0.00405686,5.052531e-05
+roaming_user_flag,0.003935562,-8.057763e-05
+circle_Uttar Pradesh West,0.003913629,-0.00046712786
+circle_Bihar & Jharkhand,0.0028684956,-6.0672926e-05
+device_brand_vivo,0.0026388194,0.00016134903
+device_brand_JioBharat / JioPhone,0.0025650463,-0.00016023591
+device_brand_Samsung,0.0015863426,-3.6216454e-05
+circle_Kerala,0.0,0.0
+circle_Himachal Pradesh,0.0,0.0
+circle_Haryana,0.0,0.0
+circle_Delhi NCR,0.0,0.0
+circle_Gujarat,0.0,0.0
+circle_Andhra Pradesh & Telangana,0.0,0.0
+circle_Assam,0.0,0.0
+offer_redeemed_90d,0.0,0.0
+circle_Jammu & Kashmir,0.0,0.0
+circle_Odisha,0.0,0.0
+circle_Punjab,0.0,0.0
+circle_Rajasthan,0.0,0.0
+circle_Kolkata,0.0,0.0
+circle_Maharashtra & Goa,0.0,0.0
+circle_Madhya Pradesh & Chhattisgarh,0.0,0.0
+zone_East,0.0,0.0
+circle_West Bengal,0.0,0.0
+circle_Uttar Pradesh East,0.0,0.0
+circle_Mumbai,0.0,0.0
+circle_North East,0.0,0.0
+device_brand_Motorola,0.0,0.0
+device_brand_OPPO,0.0,0.0
+device_brand_Apple,0.0,0.0
+device_brand_Tecno,0.0,0.0
+device_brand_OnePlus,0.0,0.0
+device_brand_realme,0.0,0.0
+device_brand_Xiaomi,0.0,0.0
+home_product_JioAirFiber,0.0,0.0
+home_product_JioFiber,0.0,0.0
+plan_type_Postpaid,0.0,0.0
+plan_type_Prepaid,0.0,0.0
